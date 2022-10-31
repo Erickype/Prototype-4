@@ -1,0 +1,4 @@
+repository "Prototype 4@Erickype@cloud"
+  path "/"
+    smartbranch "/main/develop" 
+     
