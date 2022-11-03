@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     private GameObject focalPoint;
     public float moveSpeed = 5;
     public bool hasPowerup = false;
+    private float powerUpStrength = 15;
 
     // Start is called before the first frame update
     void Start()
@@ -30,6 +31,19 @@ public class PlayerController : MonoBehaviour
         {
             hasPowerup = true;
             Destroy(other.gameObject);
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.CompareTag("Enemy") && hasPowerup)
+        {
+            Rigidbody enemyRb = collision.gameObject.GetComponent<Rigidbody>();
+            Vector3 awayFromPlayer = collision.gameObject.transform.position - transform.position;
+
+            enemyRb.AddForce(awayFromPlayer * powerUpStrength, ForceMode.Impulse);
+
+            Debug.Log("Collision with " + collision.gameObject.name + " with powerup state " + hasPowerup);
         }
     }
 }
