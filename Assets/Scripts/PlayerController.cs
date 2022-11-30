@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed = 5;
     public bool hasPowerup = false;
     private float powerUpStrength = 15;
+    public GameObject powerupIndicator;
 
     // Start is called before the first frame update
     void Start()
@@ -23,6 +24,7 @@ public class PlayerController : MonoBehaviour
         float verticalInput = Input.GetAxis("Vertical");
 
         playerRb.AddForce(moveSpeed * verticalInput * focalPoint.transform.forward);
+        powerupIndicator.transform.position = transform.position - new Vector3(0, 0.5f, 0);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -30,6 +32,7 @@ public class PlayerController : MonoBehaviour
         if (other.CompareTag("PowerUp"))
         {
             hasPowerup = true;
+            powerupIndicator.SetActive(true);
             Destroy(other.gameObject);
             StartCoroutine(PowerupCountDownRoutine());
         }
@@ -40,6 +43,7 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitForSeconds(7);
         hasPowerup = false;
+        powerupIndicator.SetActive(false);
     }
 
     private void OnCollisionEnter(Collision collision)
