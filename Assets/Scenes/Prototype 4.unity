@@ -360,6 +360,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 3878537419269438102, guid: 7c6ab31e959fd664cb3ce234bee0b1aa, type: 3}
+  powerUpPrefab: {fileID: 8928959639393967161, guid: d2328eef170655b45b8e29df29d79b60, type: 3}
+  enemyCount: 0
+  waveNumber: 1
 --- !u!4 &411058209
 Transform:
   m_ObjectHideFlags: 0
@@ -604,24 +607,6 @@ Transform:
   m_Father: {fileID: 1054061419}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 30, y: 0, z: 0}
---- !u!1 &1215410691 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7528004510200257501, guid: b41c51dfb76a2204490977b22a7b0533, type: 3}
-  m_PrefabInstance: {fileID: 1882980736191276238}
-  m_PrefabAsset: {fileID: 0}
---- !u!65 &1215410695
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1215410691}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.3181021, y: 0.57080644, z: 0.28173393}
-  m_Center: {x: 0, y: 0, z: 0.0031247437}
 --- !u!1001 &1334470833
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -639,7 +624,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4165187268090244, guid: 11a653b9169986c4f9436a3002fb4516, type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4165187268090244, guid: 11a653b9169986c4f9436a3002fb4516, type: 3}
       propertyPath: m_LocalScale.x
@@ -783,63 +768,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 8878a37eb67ddac4ead51890a31d6a18, type: 3}
---- !u!1001 &1882980736191276238
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 7525618929815743945, guid: b41c51dfb76a2204490977b22a7b0533, type: 3}
-      propertyPath: m_RootOrder
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 7525618929815743945, guid: b41c51dfb76a2204490977b22a7b0533, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7525618929815743945, guid: b41c51dfb76a2204490977b22a7b0533, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7525618929815743945, guid: b41c51dfb76a2204490977b22a7b0533, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 4.56
-      objectReference: {fileID: 0}
-    - target: {fileID: 7525618929815743945, guid: b41c51dfb76a2204490977b22a7b0533, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7525618929815743945, guid: b41c51dfb76a2204490977b22a7b0533, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7525618929815743945, guid: b41c51dfb76a2204490977b22a7b0533, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7525618929815743945, guid: b41c51dfb76a2204490977b22a7b0533, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7525618929815743945, guid: b41c51dfb76a2204490977b22a7b0533, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7525618929815743945, guid: b41c51dfb76a2204490977b22a7b0533, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7525618929815743945, guid: b41c51dfb76a2204490977b22a7b0533, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7528004510200257501, guid: b41c51dfb76a2204490977b22a7b0533, type: 3}
-      propertyPath: m_Name
-      value: PowerUp
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: b41c51dfb76a2204490977b22a7b0533, type: 3}
 --- !u!1001 &7305732181041295649
 PrefabInstance:
   m_ObjectHideFlags: 0
