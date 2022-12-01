@@ -10,7 +10,7 @@ public class SpawnManager : MonoBehaviour
     public int enemyCount;
     public int waveNumber = 1;
 
-    // Start is called before the first frame update
+    // Start is called before the first frame updates
     void Start()
     {
         SpawnEnemyWave(waveNumber);
@@ -19,10 +19,11 @@ public class SpawnManager : MonoBehaviour
 
     void SpawnEnemyWave(int number)
     {
-        int randomPos = Random.Range(0, enemiesPrefabs.Length);
-
         for (int i = 0; i < number; i++)
         {
+            int randomPos = Random.Range(0, enemiesPrefabs.Length);
+            Debug.Log("Length: " + enemiesPrefabs.Length + " Random: " + randomPos);
+
             Instantiate(enemiesPrefabs[randomPos], GenerateRandomPos(), enemiesPrefabs[randomPos].transform.rotation);
         }
     }
