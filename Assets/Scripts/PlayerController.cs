@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,8 +9,12 @@ public class PlayerController : MonoBehaviour
     private GameObject focalPoint;
     public float moveSpeed = 5;
     public bool hasPowerup = false;
+    private PowerUpEnum powerUpType;
     private float powerUpStrength = 15;
     public GameObject powerupIndicator;
+
+    private Enemy[] enemies;
+    public GameObject misilePrefab;
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +30,20 @@ public class PlayerController : MonoBehaviour
 
         playerRb.AddForce(moveSpeed * verticalInput * focalPoint.transform.forward);
         powerupIndicator.transform.position = transform.position - new Vector3(0, 0.5f, 0);
+
+        if (hasPowerup)
+        {
+            switch (powerUpType.powerUpSelector)
+            {
+                case PowerUpEnum.PowerUp.Normal:
+                    break;
+                case PowerUpEnum.PowerUp.HomingRocket:
+                    ShootHomingMisiles();
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -32,9 +51,23 @@ public class PlayerController : MonoBehaviour
         if (other.CompareTag("PowerUp"))
         {
             hasPowerup = true;
+            powerUpType = other.GetComponent<PowerUpEnum>();
             powerupIndicator.SetActive(true);
             Destroy(other.gameObject);
             StartCoroutine(PowerupCountDownRoutine());
+        }
+    }
+
+    private void ShootHomingMisiles()
+    {
+        Debug.Log("Shooting");
+        enemies = FindObjectsOfType<Enemy>();
+
+        foreach (Enemy enemy in enemies)
+        {
+            var position = enemy.transform.position - transform.position;
+
+            Instantiate(misilePrefab, position , misilePrefab.transform.rotation);
         }
     }
 
@@ -48,7 +81,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.CompareTag("Enemy") && hasPowerup)
+        if(collision.gameObject.CompareTag("Enemy") && hasPowerup && powerUpType.powerUpSelector == PowerUpEnum.PowerUp.Normal)
         {
             Rigidbody enemyRb = collision.gameObject.GetComponent<Rigidbody>();
             Vector3 awayFromPlayer = collision.gameObject.transform.position - transform.position;
