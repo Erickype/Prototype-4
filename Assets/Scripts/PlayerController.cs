@@ -13,6 +13,9 @@ public class PlayerController : MonoBehaviour
     private float powerUpStrength = 15;
     public GameObject powerupIndicator;
 
+    private Enemy[] enemies;
+    public GameObject misilePrefab;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -58,6 +61,14 @@ public class PlayerController : MonoBehaviour
     private void ShootHomingMisiles()
     {
         Debug.Log("Shooting");
+        enemies = FindObjectsOfType<Enemy>();
+
+        foreach (Enemy enemy in enemies)
+        {
+            var position = enemy.transform.position - transform.position;
+
+            Instantiate(misilePrefab, position , misilePrefab.transform.rotation);
+        }
     }
 
     // Coroutine for countdown of powerup
