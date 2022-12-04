@@ -332,6 +332,10 @@ MonoBehaviour:
   powerupIndicator: {fileID: 827219751}
   currentPowerUp: 0
   misilePrefab: {fileID: 538620175905822752, guid: 63dcf3c8bb014884982cdef5ce5ed412, type: 3}
+  hangTime: 0.5
+  smashSpeed: 5
+  explosionForce: 5
+  explosionRadius: 5
 --- !u!1 &411058207
 GameObject:
   m_ObjectHideFlags: 0
@@ -369,6 +373,7 @@ MonoBehaviour:
   powerUpsPrefabs:
   - {fileID: 8928959639393967161, guid: d2328eef170655b45b8e29df29d79b60, type: 3}
   - {fileID: 266753100701133375, guid: c4a9a86b1858fe443b2ffb91e6b61dfd, type: 3}
+  - {fileID: 4689980301434712460, guid: 2245a02eecd1aa347a98e86f2f675748, type: 3}
   enemyCount: 0
   waveNumber: 1
 --- !u!4 &411058209

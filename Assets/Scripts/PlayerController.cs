@@ -20,6 +20,13 @@ public class PlayerController : MonoBehaviour
     private GameObject tmpMisile;
     private Coroutine powerUpCoutdown;
 
+    //Variables for smash
+    public float hangTime = 2;
+    public float smashSpeed = 5;
+    public float explosionForce = 5;
+    public float explosionRadius = 5;
+    bool smashing = false;
+    float floorY;
 
     // Start is called before the first frame update
     void Start()
@@ -41,6 +48,45 @@ public class PlayerController : MonoBehaviour
             FireMisiles();
         }
 
+        if (currentPowerUp == PowerUpType.Smash && Input.GetKeyDown(KeyCode.Space) && !smashing)
+        {
+            smashing = true;
+            StartCoroutine(SmashFloor());
+        }
+
+    }
+
+    IEnumerator SmashFloor()
+    {
+        var enemies = FindObjectsOfType<Enemy>();
+
+        floorY = transform.position.y;
+
+        float jumpTime = Time.time + hangTime;
+
+        while(Time.time < jumpTime)
+        {
+            playerRb.velocity = new Vector2(playerRb.velocity.x, smashSpeed);
+
+            yield return null;
+        }
+
+        while(transform.position.y > floorY)
+        {
+            playerRb.velocity = new Vector2(playerRb.velocity.x, -smashSpeed * 2);
+
+            yield return null;
+        }
+
+        foreach (var enemy in enemies)
+        {
+            if(enemy != null)
+            {
+                enemy.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, transform.position, explosionRadius, 0.0f, ForceMode.Impulse);
+            }
+        }
+
+        smashing = false;
     }
 
     private void OnTriggerEnter(Collider other)
