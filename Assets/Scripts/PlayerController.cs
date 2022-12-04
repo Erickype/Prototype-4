@@ -20,6 +20,13 @@ public class PlayerController : MonoBehaviour
     private GameObject tmpMisile;
     private Coroutine powerUpCoutdown;
 
+    //Variables for smash
+    public float hangTime;
+    public float smashSpeed;
+    public float explosionForce;
+    public float explosionRadius;
+    bool smashing = false;
+    float floorY;
 
     // Start is called before the first frame update
     void Start()
@@ -41,6 +48,16 @@ public class PlayerController : MonoBehaviour
             FireMisiles();
         }
 
+        if (currentPowerUp == PowerUpType.Smash && Input.GetKeyDown(KeyCode.Space))
+        {
+            SmashFloor();
+        }
+
+    }
+
+    private void SmashFloor()
+    {
+        throw new NotImplementedException();
     }
 
     private void OnTriggerEnter(Collider other)
