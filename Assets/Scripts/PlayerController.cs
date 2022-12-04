@@ -1,3 +1,4 @@
+using Assets.Scripts.PowerUps;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -74,6 +75,17 @@ public class PlayerController : MonoBehaviour
             enemyRb.AddForce(awayFromPlayer * powerUpStrength, ForceMode.Impulse);
 
             Debug.Log("Collision with: " + collision.gameObject.name + "\nWith powerup state: " + currentPowerUp.ToString());
+        }
+    }
+
+    void FireMisiles()
+    {
+        var enemies = FindObjectsOfType<Enemy>();
+
+        foreach (var enemy in enemies)
+        {
+            tmpMisile = Instantiate(misilePrefab, transform.position + Vector3.up, Quaternion.identity);
+            tmpMisile.GetComponent<HominMisile>().Fire(enemy.transform);
         }
     }
 }
