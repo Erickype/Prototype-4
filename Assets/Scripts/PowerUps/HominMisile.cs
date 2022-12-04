@@ -28,5 +28,19 @@ namespace Assets.Scripts.PowerUps
             homing = true;
             Destroy(gameObject, aliveTimer);
         }
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            if(target != null)
+            {
+                if (collision.gameObject.CompareTag(target.tag))
+                {
+                    Rigidbody targetRb = collision.gameObject.GetComponent<Rigidbody>();
+                    Vector3 away = -collision.GetContact(0).normal;
+                    targetRb.AddForce(away * misileStrength, ForceMode.Impulse);
+                    Destroy(gameObject);
+                }
+            }
+        }
     }
 }
