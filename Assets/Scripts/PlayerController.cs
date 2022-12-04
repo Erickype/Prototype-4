@@ -31,19 +31,6 @@ public class PlayerController : MonoBehaviour
         playerRb.AddForce(moveSpeed * verticalInput * focalPoint.transform.forward);
         powerupIndicator.transform.position = transform.position - new Vector3(0, 0.5f, 0);
 
-        if (hasPowerup)
-        {
-            switch (powerUpType.powerUpSelector)
-            {
-                case PowerUpEnum.PowerUp.Normal:
-                    break;
-                case PowerUpEnum.PowerUp.HomingRocket:
-                    ShootHomingMisiles();
-                    break;
-                default:
-                    break;
-            }
-        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -81,7 +68,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.CompareTag("Enemy") && hasPowerup && powerUpType.powerUpSelector == PowerUpEnum.PowerUp.Normal)
+        if(collision.gameObject.CompareTag("Enemy") && hasPowerup)
         {
             Rigidbody enemyRb = collision.gameObject.GetComponent<Rigidbody>();
             Vector3 awayFromPlayer = collision.gameObject.transform.position - transform.position;
