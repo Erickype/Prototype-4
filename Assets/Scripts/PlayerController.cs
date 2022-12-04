@@ -42,23 +42,16 @@ public class PlayerController : MonoBehaviour
         if (other.CompareTag("PowerUp"))
         {
             hasPowerup = true;
-            powerUpType = other.GetComponent<PowerUpEnum>();
+            currentPowerUp = other.gameObject.GetComponent<PowerUpEnum>().powerUpType;
             powerupIndicator.SetActive(true);
             Destroy(other.gameObject);
-            StartCoroutine(PowerupCountDownRoutine());
-        }
-    }
 
-    private void ShootHomingMisiles()
-    {
-        Debug.Log("Shooting");
-        enemies = FindObjectsOfType<Enemy>();
+            if(powerUpCoutdown != null)
+            {
+                StopCoroutine(powerUpCoutdown);
+            }
 
-        foreach (Enemy enemy in enemies)
-        {
-            var position = enemy.transform.position - transform.position;
-
-            Instantiate(misilePrefab, position , misilePrefab.transform.rotation);
+            powerUpCoutdown =  StartCoroutine(PowerupCountDownRoutine());
         }
     }
 
