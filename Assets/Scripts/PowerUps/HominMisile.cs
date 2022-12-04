@@ -12,5 +12,11 @@ namespace Assets.Scripts.PowerUps
         private float misileStrength = 15.0f;
         private float aliveTimer = 5.0f;
 
+        public void Fire(Transform newTarget)
+        {
+            target = newTarget;
+            homing = true;
+            Destroy(gameObject, aliveTimer);
+        }
     }
 }
