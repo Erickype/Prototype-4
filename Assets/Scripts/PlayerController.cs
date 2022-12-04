@@ -61,6 +61,7 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(7);
         hasPowerup = false;
         powerupIndicator.SetActive(false);
+        currentPowerUp = PowerUpType.None;
     }
 
     private void OnCollisionEnter(Collision collision)
