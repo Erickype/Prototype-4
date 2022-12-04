@@ -9,12 +9,16 @@ public class PlayerController : MonoBehaviour
     private GameObject focalPoint;
     public float moveSpeed = 5;
     public bool hasPowerup = false;
-    private PowerUpEnum powerUpType;
     private float powerUpStrength = 15;
     public GameObject powerupIndicator;
 
-    private Enemy[] enemies;
+    //Variables for homing misile
+    public PowerUpType currentPowerUp = PowerUpType.None;
+
     public GameObject misilePrefab;
+    private GameObject tmpMisile;
+    private Coroutine powerUpCoutdown;
+
 
     // Start is called before the first frame update
     void Start()
@@ -25,7 +29,7 @@ public class PlayerController : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
+    { 
         float verticalInput = Input.GetAxis("Vertical");
 
         playerRb.AddForce(moveSpeed * verticalInput * focalPoint.transform.forward);
