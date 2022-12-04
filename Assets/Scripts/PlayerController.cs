@@ -1,3 +1,4 @@
+using Assets.Scripts.PowerUps;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,12 +10,16 @@ public class PlayerController : MonoBehaviour
     private GameObject focalPoint;
     public float moveSpeed = 5;
     public bool hasPowerup = false;
-    private PowerUpEnum powerUpType;
     private float powerUpStrength = 15;
     public GameObject powerupIndicator;
 
-    private Enemy[] enemies;
+    //Variables for homing misile
+    public PowerUpType currentPowerUp = PowerUpType.None;
+
     public GameObject misilePrefab;
+    private GameObject tmpMisile;
+    private Coroutine powerUpCoutdown;
+
 
     // Start is called before the first frame update
     void Start()
@@ -25,25 +30,17 @@ public class PlayerController : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
+    { 
         float verticalInput = Input.GetAxis("Vertical");
 
         playerRb.AddForce(moveSpeed * verticalInput * focalPoint.transform.forward);
         powerupIndicator.transform.position = transform.position - new Vector3(0, 0.5f, 0);
 
-        if (hasPowerup)
+        if (currentPowerUp == PowerUpType.HomingRocket && Input.GetKeyDown(KeyCode.F))
         {
-            switch (powerUpType.powerUpSelector)
-            {
-                case PowerUpEnum.PowerUp.Normal:
-                    break;
-                case PowerUpEnum.PowerUp.HomingRocket:
-                    ShootHomingMisiles();
-                    break;
-                default:
-                    break;
-            }
+            FireMisiles();
         }
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -51,23 +48,16 @@ public class PlayerController : MonoBehaviour
         if (other.CompareTag("PowerUp"))
         {
             hasPowerup = true;
-            powerUpType = other.GetComponent<PowerUpEnum>();
+            currentPowerUp = other.gameObject.GetComponent<PowerUpEnum>().powerUpType;
             powerupIndicator.SetActive(true);
             Destroy(other.gameObject);
-            StartCoroutine(PowerupCountDownRoutine());
-        }
-    }
 
-    private void ShootHomingMisiles()
-    {
-        Debug.Log("Shooting");
-        enemies = FindObjectsOfType<Enemy>();
+            if(powerUpCoutdown != null)
+            {
+                StopCoroutine(powerUpCoutdown);
+            }
 
-        foreach (Enemy enemy in enemies)
-        {
-            var position = enemy.transform.position - transform.position;
-
-            Instantiate(misilePrefab, position , misilePrefab.transform.rotation);
+            powerUpCoutdown =  StartCoroutine(PowerupCountDownRoutine());
         }
     }
 
@@ -77,18 +67,30 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(7);
         hasPowerup = false;
         powerupIndicator.SetActive(false);
+        currentPowerUp = PowerUpType.None;
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.CompareTag("Enemy") && hasPowerup && powerUpType.powerUpSelector == PowerUpEnum.PowerUp.Normal)
+        if(collision.gameObject.CompareTag("Enemy") && currentPowerUp == PowerUpType.Normal)
         {
             Rigidbody enemyRb = collision.gameObject.GetComponent<Rigidbody>();
             Vector3 awayFromPlayer = collision.gameObject.transform.position - transform.position;
 
             enemyRb.AddForce(awayFromPlayer * powerUpStrength, ForceMode.Impulse);
 
-            Debug.Log("Collision with " + collision.gameObject.name + " with powerup state " + hasPowerup);
+            Debug.Log("Collision with: " + collision.gameObject.name + "\nWith powerup state: " + currentPowerUp.ToString());
+        }
+    }
+
+    void FireMisiles()
+    {
+        var enemies = FindObjectsOfType<Enemy>();
+
+        foreach (var enemy in enemies)
+        {
+            tmpMisile = Instantiate(misilePrefab, transform.position + Vector3.up, Quaternion.identity);
+            tmpMisile.GetComponent<HominMisile>().Fire(enemy.transform);
         }
     }
 }

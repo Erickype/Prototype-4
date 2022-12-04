@@ -2,22 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PowerUpEnum : MonoBehaviour
-{
-    public enum PowerUp { Normal, HomingRocket }
+public enum PowerUpType { None, Normal, HomingRocket }
 
-    public PowerUp powerUpSelector;
+public class PowerUpEnum : MonoBehaviour{    
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        switch (powerUpSelector)
-        {
-            case PowerUp.Normal:
-                break;
-            case PowerUp.HomingRocket:
-                break;
-        }
-    }
-
+    public PowerUpType powerUpType;
 }

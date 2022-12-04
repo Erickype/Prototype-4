@@ -330,7 +330,8 @@ MonoBehaviour:
   moveSpeed: 5
   hasPowerup: 0
   powerupIndicator: {fileID: 827219751}
-  misilePrefab: {fileID: 266753100701133375, guid: 63dcf3c8bb014884982cdef5ce5ed412, type: 3}
+  currentPowerUp: 0
+  misilePrefab: {fileID: 538620175905822752, guid: 63dcf3c8bb014884982cdef5ce5ed412, type: 3}
 --- !u!1 &411058207
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,32 +5,42 @@ namespace Assets.Scripts.PowerUps
 {
     public class HominMisile : MonoBehaviour
     {
-        private Rigidbody enemyRb;
+        private Transform target;
+        private float speed = 100;
+        private bool homing;
 
-        private Transform playerTrans;
-        public float speed = 100;
+        private float misileStrength = 15.0f;
+        private float aliveTimer = 5.0f;
 
-        // Use this for initialization
-        void Start()
+        private void Update()
         {
-             playerTrans = GameObject.Find("Player").transform;
-             enemyRb = GetComponent<Rigidbody>(); 
+            if(homing && target != null)
+            {
+                Vector3 movingDirection = (target.transform.position - transform.position).normalized;
+                transform.position += speed * Time.deltaTime * movingDirection;
+                transform.LookAt(transform.position);
+            }
         }
 
-        // Update is called once per frame
-        void Update()
+        public void Fire(Transform newTarget)
         {
-            Vector3 lookDirection = (transform.position - playerTrans.position).normalized;
-
-            enemyRb.AddForce(speed * lookDirection);
-
-            StartCoroutine(DestroyCountdown());
+            target = newTarget;
+            homing = true;
+            Destroy(gameObject, aliveTimer);
         }
 
-        IEnumerator DestroyCountdown()
+        private void OnCollisionEnter(Collision collision)
         {
-            yield return new WaitForSeconds(7);
-            Destroy(gameObject);
+            if(target != null)
+            {
+                if (collision.gameObject.CompareTag(target.tag))
+                {
+                    Rigidbody targetRb = collision.gameObject.GetComponent<Rigidbody>();
+                    Vector3 away = -collision.GetContact(0).normal;
+                    targetRb.AddForce(away * misileStrength, ForceMode.Impulse);
+                    Destroy(gameObject);
+                }
+            }
         }
     }
 }
