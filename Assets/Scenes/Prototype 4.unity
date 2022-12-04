@@ -332,10 +332,10 @@ MonoBehaviour:
   powerupIndicator: {fileID: 827219751}
   currentPowerUp: 0
   misilePrefab: {fileID: 538620175905822752, guid: 63dcf3c8bb014884982cdef5ce5ed412, type: 3}
-  hangTime: 0
-  smashSpeed: 0
-  explosionForce: 0
-  explosionRadius: 0
+  hangTime: 0.5
+  smashSpeed: 5
+  explosionForce: 5
+  explosionRadius: 5
 --- !u!1 &411058207
 GameObject:
   m_ObjectHideFlags: 0

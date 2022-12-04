@@ -21,10 +21,10 @@ public class PlayerController : MonoBehaviour
     private Coroutine powerUpCoutdown;
 
     //Variables for smash
-    public float hangTime;
-    public float smashSpeed;
-    public float explosionForce;
-    public float explosionRadius;
+    public float hangTime = 2;
+    public float smashSpeed = 5;
+    public float explosionForce = 5;
+    public float explosionRadius = 5;
     bool smashing = false;
     float floorY;
 
@@ -70,6 +70,23 @@ public class PlayerController : MonoBehaviour
 
             yield return null;
         }
+
+        while(transform.position.y > floorY)
+        {
+            playerRb.velocity = new Vector2(playerRb.velocity.x, -smashSpeed * 2);
+
+            yield return null;
+        }
+
+        foreach (var enemy in enemies)
+        {
+            if(enemy != null)
+            {
+                enemy.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, transform.position, explosionRadius, 0.0f, ForceMode.Impulse);
+            }
+        }
+
+        smashing = false;
     }
 
     private void OnTriggerEnter(Collider other)
