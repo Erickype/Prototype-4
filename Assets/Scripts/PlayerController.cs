@@ -36,6 +36,11 @@ public class PlayerController : MonoBehaviour
         playerRb.AddForce(moveSpeed * verticalInput * focalPoint.transform.forward);
         powerupIndicator.transform.position = transform.position - new Vector3(0, 0.5f, 0);
 
+        if (currentPowerUp == PowerUpType.HomingRocket && Input.GetKeyDown(KeyCode.F))
+        {
+            FireMisiles();
+        }
+
     }
 
     private void OnTriggerEnter(Collider other)
