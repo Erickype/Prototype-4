@@ -48,16 +48,28 @@ public class PlayerController : MonoBehaviour
             FireMisiles();
         }
 
-        if (currentPowerUp == PowerUpType.Smash && Input.GetKeyDown(KeyCode.Space))
+        if (currentPowerUp == PowerUpType.Smash && Input.GetKeyDown(KeyCode.Space) && !smashing)
         {
-            SmashFloor();
+            smashing = true;
+            StartCoroutine(SmashFloor());
         }
 
     }
 
-    private void SmashFloor()
+    IEnumerator SmashFloor()
     {
-        throw new NotImplementedException();
+        var enemies = FindObjectsOfType<Enemy>();
+
+        floorY = transform.position.y;
+
+        float jumpTime = Time.time + hangTime;
+
+        while(Time.time < jumpTime)
+        {
+            playerRb.velocity = new Vector2(playerRb.velocity.x, smashSpeed);
+
+            yield return null;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
